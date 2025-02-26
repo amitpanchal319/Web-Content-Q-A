@@ -17,7 +17,7 @@ url = st.text_input("🌍 Enter URL to Ingest:")
 question = st.text_input("❓ Ask a Question:")
 
 # Use environment variable for API URL (or fallback to localhost for testing)
-API_URL = os.getenv("API_URL", "http://localhost:8000")  # Change this to your backend URL after deployment
+API_URL = os.getenv("API_URL", "https://web-content-qa-backend.onrender.com")  # Change this to your backend URL after deployment
 
 # Ingest URL
 if st.button("🚀 Ingest URL"):
@@ -25,7 +25,10 @@ if st.button("🚀 Ingest URL"):
         st.error("❌ Please enter a URL.")
     else:
         try:
+            print(f"Sending request to {API_URL}/ingest with URL: {url}")  # Log the request
             response = requests.post(f"{API_URL}/ingest", json={"url": url})
+            print(f"Response status code: {response.status_code}")  # Log the status code
+            print(f"Response content: {response.text}")  # Log the response content
             if response.status_code == 200:
                 st.session_state.url_ingested = True  # Mark URL as ingested
                 st.success("✅ URL successfully ingested!")
@@ -43,7 +46,10 @@ if st.button("🤖 Get Answer"):
         st.error("❌ No content ingested. Please ingest a URL first.")
     else:
         try:
+            print(f"Sending request to {API_URL}/ask with question: {question}")  # Log the request
             response = requests.post(f"{API_URL}/ask", json={"question": question})
+            print(f"Response status code: {response.status_code}")  # Log the status code
+            print(f"Response content: {response.text}")  # Log the response content
             if response.status_code == 200:
                 answer = response.json().get("answer", "No answer found")
                 st.success(f"**📝 Answer:** {answer}")
