@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: web-content-qa-frontend
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: streamlit run app.py --server.port $PORT --server.address 0.0.0.0
+    envVars:
+      - key: PORT
+        value: 8501
+      - key: API_URL
+        value: https://web-content-qa-backend.onrender.com  # Replace with your backend URL after deployment

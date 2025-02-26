@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+newspaper3k
+transformers
+torch
+lxml
+lxml_html_clean
