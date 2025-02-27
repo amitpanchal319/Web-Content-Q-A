@@ -17,7 +17,7 @@ url = st.text_input("🌍 Enter URL to Ingest:")
 question = st.text_input("❓ Ask a Question:")
 
 # Use environment variable for API URL (or fallback to localhost for testing)
-API_URL = os.getenv("API_URL", "https://web-content-qa-backend.onrender.com")  # Change this to your backend URL after deployment
+API_URL = os.getenv("API_URL", "https://my-backend-service.onrender.com") # Change this to your backend URL after deployment
 
 # Ingest URL
 if st.button("🚀 Ingest URL"):
