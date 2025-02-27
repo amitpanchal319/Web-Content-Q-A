@@ -45,7 +45,7 @@ DistilBERT is a smaller, faster version of BERT model trained on **SQuAD Dataset
 5. The **DistilBERT QA Model** generates the answer from the content.
 
 ## 🚀 Live Demo
-✅ Backend API Hosted Link:  
+✅ Frontend API Hosted Link:  
 👉 https://web-content-qa-frontend.onrender.com/
 
 ### How to Test?
