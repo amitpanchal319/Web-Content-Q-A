@@ -47,21 +47,28 @@ def clean_html(raw_html):
     return soup.get_text()
 
 # Ingest URL content with chunk-based reading
-@app.post("/ingest")
-async def ingest_url(data: URLInput):
+@app.post("/ask")
+async def ask_question(data: QuestionInput):
     global ingested_content
+    if not ingested_content:
+        raise HTTPException(status_code=400, detail="No content ingested. Please ingest a URL first.")
     try:
-        print(f"Ingesting URL: {data.url}")
-        article = newspaper.Article(data.url)
-        article.download()
-        article.parse()
-        cleaned_content = clean_html(article.text)
-        ingested_content = cleaned_content[:10000]  # Limit content to 10,000 characters to reduce RAM usage
-        print(f"Ingested Content (Preview): {ingested_content[:500]}")
-        return {"message": "Content ingested successfully!", "preview": ingested_content[:500]}
+        if not data.question.strip():
+            raise HTTPException(status_code=400, detail="Question cannot be empty.")
+        
+        print(f"Question: {data.question}")
+        result = qa_pipeline(question=data.question, context=ingested_content)
+        
+        if not result["answer"]:
+            raise HTTPException(status_code=404, detail="No answer found for the question.")
+
+        print(f"Answer: {result['answer']}")
+        return {"answer": result["answer"]}
+
     except Exception as e:
-        print(f"Error ingesting URL: {e}")
-        raise HTTPException(status_code=400, detail=str(e))
+        print(f"Error in question-answering: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
 
 # Answer questions
 @app.post("/ask")
