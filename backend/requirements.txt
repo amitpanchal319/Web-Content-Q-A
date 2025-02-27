@@ -5,3 +5,5 @@ transformers
 torch
 lxml
 lxml_html_clean
+beautifulsoup4
+
