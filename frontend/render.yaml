@@ -8,4 +8,4 @@ services:
       - key: PORT
         value: 8501
       - key: API_URL
-        value: https://web-content-qa-backend.onrender.com  # Replace with your backend URL after deployment
+        value: https://web-content-qa-backend.onrender.com  
